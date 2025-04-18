@@ -8,6 +8,7 @@
 }
 
 .sign-in{
+    font-family: "Ubuntu", sans-serif;
     width: 100%;
     padding: 12px;
     max-width: 400px;
@@ -16,5 +17,6 @@
     background-color: rgb(234, 226, 204);
     font-weight: bold;
     text-align: center;
+    font-size: 22px;
     color: black;
 }
