@@ -1,10 +1,16 @@
-import img_logo from "./assets/logo2-removebg-preview 1.png"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import Dashboard from "./Components/Dashboard/Dashboard"
+import Explorer from "./Components/Explorer/Explorer"
+
 export default function App() {
   return (
-    <div className="home">
-      <img src={img_logo} alt="" className="logo" />
-      {/* Botão do Felipe */}
-      <button className="sign-in">Entrar.</button>
-    </div>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" exact element={<Explorer />} />
+          <Route path="/lista" exact element={<Dashboard />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   )
 }
