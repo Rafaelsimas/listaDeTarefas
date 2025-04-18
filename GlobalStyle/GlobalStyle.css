@@ -6,6 +6,10 @@
   list-style: none;
 }
 
+:root {
+  --main-color: rgba(243, 184, 23, 1);
+}
+
 .home {
   width: 100%;
   height: 100vh;
@@ -13,7 +17,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: rgba(243, 184, 23, 1);
+  background-color: var(--main-color);
 }
 
 .sign-in {
@@ -28,4 +32,32 @@
   text-align: center;
   font-size: 22px;
   color: black;
+}
+
+body {
+  background-color: var(--main-color);
+}
+
+header {
+  width: 100%;
+
+  height: 100px;
+  display: flex;
+  justify-content: center;
+}
+
+header nav {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-inline: auto;
+}
+
+header nav img {
+  width: 80px;
+  height: 80px;
+}
+header nav .exit {
+  font-size: 1.5rem;
 }
