@@ -4,7 +4,7 @@ export default function App() {
     <div className="home">
       <img src={img_logo} alt="" className="logo" />
       {/* Botão do Felipe */}
-      <button className="sign-in">Entrar</button>
+      <button className="sign-in">Entrar.</button>
     </div>
   )
 }
