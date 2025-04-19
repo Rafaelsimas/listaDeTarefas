@@ -16,7 +16,7 @@ export default function Aplication() {
 
 
     <div className="description">
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia hic fuga quibusdam ipsum tempore. Ad consequuntur saepe impedit error quo eum aliquid officiis! Maiores iste corporis totam, pariatur cum aperiam?
+      Lorem ipsum, dolor sit amet consectetu adipisicing elit. Quia hic fuga quibusdam ipsum tempore. Ad consequuntur saepe impedit error quo eum aliquid officiis! Maiores iste corporis totam, pariatur cum aperiam?
     </div>
   </div>
 </div>
