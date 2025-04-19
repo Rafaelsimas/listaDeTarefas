@@ -30,6 +30,7 @@ export default function Aplication() {
         </div>
           <IoIosAddCircle  className="add"/>
       </div>
+      <div className="form"></div>
     </>
   );
 }
