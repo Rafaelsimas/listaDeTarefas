@@ -2,8 +2,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Dashboard from "./Components/Dashboard/Dashboard"
 import Explorer from "./Components/Explorer/Explorer"
 import Menu from "./Components/Menu/Menu"
+<<<<<<< HEAD
 import Aplication from "./Components/Aplication/Aplication"
 
+=======
+import Aplication from "../src/Components/Aplication/Aplication"
+>>>>>>> felipe
 export default function App() {
   return (
     <>
