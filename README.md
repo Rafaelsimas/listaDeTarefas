@@ -1,12 +1,19 @@
-# React + Vite
+# 🚀 CodeTime ToDo List
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Bem-vindo ao ** CodeTime ToDo List**!  
+Com ele você organiza sua rotina do dia com produtividade.
 
-Currently, two official plugins are available:
+## 📥 Como usar
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Clone o repositório:
+   ```bash
+   git clone git@github.com:Rafaelsimas/listaDeTarefas.git
+   ```
 
-## Expanding the ESLint configuration
+### ✅ O que fazer:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Instale a node_modules usando o comando (npm install)
+2. Rode o projeto com o comando (npm run dev)
+3. Pressione CTRL e click no link que será aberto no terminal.
+
+Basta curtir a aplicação!
