@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { FaTrashAlt, FaPen } from "react-icons/fa";
-
+{/* Felipe */}
 export default function Aplication() {
   const [tasks, setTasks] = useState([
     {
       id: 1,
       title: "Estudar React",
       description:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia hic fuga quibusdam ipsum tempore...",
+        "Anotações importantes para o estudo",
     },
   ]);
 
