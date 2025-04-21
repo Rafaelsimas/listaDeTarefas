@@ -19,12 +19,25 @@
   align-items: center;
   background-color: var(--main-color);
 }
+.home .home_box {
+  width: 80%;
+  height: 500px;
 
-.sign-in {
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+}
+.home .home_box .logo {
+  width: 350px;
+  height: 200px;
+  object-fit: cover;
+}
+.home .home_box .sign-in {
   font-family: "Ubuntu", sans-serif;
   width: 100%;
   padding: 12px;
-  max-width: 400px;
+  max-width: 350px;
   border-radius: 8px;
   border: none;
   background-color: rgb(234, 226, 204);
@@ -62,14 +75,19 @@ header nav .exit {
   font-size: 1.5rem;
 }
 
+<<<<<<< HEAD
 /* ------------------------containerDashboard----------------- */
 .containerDashboard {
   width: 80%;
   margin-inline: auto;
+=======
+.container {
+>>>>>>> 80742e17cfc1993c6d93cc1e1a8c1b0eb1610850
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+<<<<<<< HEAD
 .containerDashboard img {
   width: 300px;
   margin-top: 30px;
@@ -98,4 +116,16 @@ header nav .exit {
   border: none;
   background-color: white;
   color: black;
+=======
+.container .date {
+  display: flex;
+  color: rgba(120, 120, 120, 1);
+  justify-content: center;
+  font-family: "Ubuntu", sans-serif;
+  padding: 2px;
+}
+.container .add {
+  width: 40px;
+  height: 40px;
+>>>>>>> 80742e17cfc1993c6d93cc1e1a8c1b0eb1610850
 }
