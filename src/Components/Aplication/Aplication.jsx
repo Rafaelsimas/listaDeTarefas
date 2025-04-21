@@ -25,7 +25,42 @@ export default function Aplication() {
   const [tasks, setTasks] = useState([
     {
       id: 1,
+      title: "Estudar HTML",
+      description: "Anotações importantes para o estudo",
+    },
+    {
+      id: 2,
+      title: "Estudar CSS",
+      description: "Anotações importantes para o estudo",
+    },
+    {
+      id: 3,
+      title: "Estudar JavaScript",
+      description: "Anotações importantes para o estudo",
+    },
+    {
+      id: 4,
       title: "Estudar React",
+      description: "Anotações importantes para o estudo",
+    },
+    {
+      id: 5,
+      title: "Estudar Backend",
+      description: "Anotações importantes para o estudo",
+    },
+    {
+      id: 5,
+      title: "Estudar Trello",
+      description: "Anotações importantes para o estudo",
+    },
+    {
+      id: 5,
+      title: "Estudar Figma",
+      description: "Anotações importantes para o estudo",
+    },
+    {
+      id: 5,
+      title: "Estudar Hosedagem de sites",
       description: "Anotações importantes para o estudo",
     },
   ])
