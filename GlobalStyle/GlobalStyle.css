@@ -75,19 +75,11 @@ header nav .exit {
   font-size: 1.5rem;
 }
 
-<<<<<<< HEAD
 /* ------------------------containerDashboard----------------- */
 .containerDashboard {
   width: 80%;
   margin-inline: auto;
-=======
-.container {
->>>>>>> 80742e17cfc1993c6d93cc1e1a8c1b0eb1610850
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
-<<<<<<< HEAD
 .containerDashboard img {
   width: 300px;
   margin-top: 30px;
@@ -116,7 +108,8 @@ header nav .exit {
   border: none;
   background-color: white;
   color: black;
-=======
+}
+
 .container .date {
   display: flex;
   color: rgba(120, 120, 120, 1);
@@ -124,8 +117,14 @@ header nav .exit {
   font-family: "Ubuntu", sans-serif;
   padding: 2px;
 }
+
 .container .add {
   width: 40px;
   height: 40px;
->>>>>>> 80742e17cfc1993c6d93cc1e1a8c1b0eb1610850
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
