@@ -1,25 +1,61 @@
-import { FaTrashAlt } from "react-icons/fa";
-import { FaPen } from "react-icons/fa";
+import { useState } from "react";
+import { FaTrashAlt, FaPen } from "react-icons/fa";
+
 export default function Aplication() {
-  return <div className="container">
-    {/* Felipe */}
-<div className="task-bx">
-  <p className="count">Você tem 0 tarefas</p>
+  const [tasks, setTasks] = useState([
+    {
+      id: 1,
+      title: "Estudar React",
+      description:
+        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia hic fuga quibusdam ipsum tempore...",
+    },
+  ]);
 
-  <div className="task-card">
-    <div className="title">Estudar React
-    <div className="icon">
-    <FaTrashAlt />
-    <FaPen />    
+  const deleteTask = (id) => {
+    setTasks(tasks.filter((task) => task.id !== id));
+  };
+
+  const editTask = (id) => {
+    const newTitle = prompt("Digite o novo título:");
+    const newDescription = prompt("Digite a nova descrição:");
+    if (newTitle && newDescription) {
+      setTasks(
+        tasks.map((task) =>
+          task.id === id
+            ? { ...task, title: newTitle, description: newDescription }
+            : task
+        )
+      );
+    }
+  };
+
+  return (
+    <div className="container">
+      <div className="task-bx">
+        <p className="count">Você tem {tasks.length} tarefa(s)</p>
+
+        {tasks.map((task) => (
+          <div className="task-card" key={task.id}>
+            <div className="title">
+              {task.title}
+              <div className="icon">
+                <FaTrashAlt
+                  onClick={() => deleteTask(task.id)}
+                  style={{ cursor: "pointer", marginLeft: "10px" }}
+                  title="Excluir"
+                />
+                <FaPen
+                  onClick={() => editTask(task.id)}
+                  style={{ cursor: "pointer", marginLeft: "10px" }}
+                  title="Editar"
+                />
+              </div>
+            </div>
+
+            <div className="description">{task.description}</div>
+          </div>
+        ))}
+      </div>
     </div>
-    </div>
-
-
-    <div className="description">
-      Lorem ipsum, dolor sit amet consectetu adipisicing elit. Quia hic fuga quibusdam ipsum tempore. Ad consequuntur saepe impedit error quo eum aliquid officiis! Maiores iste corporis totam, pariatur cum aperiam?
-    </div>
-  </div>
-</div>
-
-  </div>
+  );
 }
