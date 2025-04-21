@@ -144,8 +144,9 @@ header nav .exit {
 
 .task-card {
   background-color: rgba(243, 184, 23, 1);
-  width: 96%;
+  width: 90%;
   margin-left: 20px;
+  padding: 1rem;
 }
 
 .title {
