@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useEffect, useState } from "react";
 import Menu from "../Menu/Menu";
 import { IoIosAddCircle } from "react-icons/io";
@@ -24,14 +25,23 @@ export default function Aplication() {
   };
 
   const [now, setNow] = useState(new Date());
+=======
+import { useEffect, useState } from "react"
+import Menu from "../Menu/Menu"
+import { IoIosAddCircle } from "react-icons/io"
+import { FaTrashAlt, FaPen } from "react-icons/fa"
+
+export default function Aplication() {
+  const [now, setNow] = useState(new Date())
+>>>>>>> 144310fb5de6e957ed03712ef1a07b1b22c9f261
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setNow(new Date());
-    }, 1000); // atualiza a cada 1 segundo
+      setNow(new Date())
+    }, 1000) // atualiza a cada 1 segundo
 
-    return () => clearInterval(interval);
-  }, []);
+    return () => clearInterval(interval)
+  }, [])
 
   const formatted = now.toLocaleString("pt-BR", {
     day: "2-digit",
@@ -39,7 +49,33 @@ export default function Aplication() {
     hour: "2-digit",
     minute: "2-digit",
     second: "2-digit",
-  });
+  })
+
+  const [tasks, setTasks] = useState([
+    {
+      id: 1,
+      title: "Estudar React",
+      description: "Anotações importantes para o estudo",
+    },
+  ])
+
+  const deleteTask = (id) => {
+    setTasks(tasks.filter((task) => task.id !== id))
+  }
+
+  const editTask = (id) => {
+    const newTitle = prompt("Digite o novo título:")
+    const newDescription = prompt("Digite a nova descrição:")
+    if (newTitle && newDescription) {
+      setTasks(
+        tasks.map((task) =>
+          task.id === id
+            ? { ...task, title: newTitle, description: newDescription }
+            : task
+        )
+      )
+    }
+  }
 
   const deleteTask = (id) => {
     setTasks(tasks.filter((task) => task.id !== id));
@@ -66,6 +102,7 @@ export default function Aplication() {
         <div className="date">
           <h1>{formatted}</h1>
         </div>
+<<<<<<< HEAD
         <IoIosAddCircle onClick={addTasks} className="add" />
 
         <div className="formBox hidden">
@@ -89,6 +126,9 @@ export default function Aplication() {
             <button type="submit">Adicionar</button>
           </form>
         </div>
+=======
+        <IoIosAddCircle className="add" />
+>>>>>>> 144310fb5de6e957ed03712ef1a07b1b22c9f261
 
         <div className="task-bx">
           <p className="count">Você tem {tasks.length} tarefa(s)</p>
@@ -117,7 +157,7 @@ export default function Aplication() {
         </div>
       </div>
     </>
-  );
+  )
 }
 
 function addTasks(){
