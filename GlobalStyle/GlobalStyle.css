@@ -75,11 +75,41 @@ header nav .exit {
   font-size: 1.5rem;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* ------------------------containerDashboard----------------- */
+.containerDashboard {
+  width: 80%;
+  margin-inline: auto;
 }
+.containerDashboard img {
+  width: 300px;
+  margin-top: 30px;
+}
+
+.containerDashboard .container-txt {
+  padding-top: 70px;
+  width: 100%;
+  text-align: center;
+  color: white;
+}
+
+.containerDashboard .container-txt .txt-xl {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+.containerDashboard .container-txt .txt-md {
+  font-size: 1.2rem;
+  margin-bottom: 60px;
+}
+
+.containerDashboard .container-txt .btn-dashboard {
+  width: 100%;
+  padding: 1rem 7.8rem;
+  border-radius: 3px;
+  border: none;
+  background-color: white;
+  color: black;
+}
+
 .container .date {
   display: flex;
   color: rgba(120, 120, 120, 1);
@@ -87,7 +117,46 @@ header nav .exit {
   font-family: "Ubuntu", sans-serif;
   padding: 2px;
 }
+
 .container .add {
   width: 40px;
   height: 40px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.task-bx {
+  background-color: white;
+  width: 100%;
+  height: 80vh;
+  margin-top: 15%;
+  border-radius: 3%;
+  overflow: auto;
+}
+
+.task-bx .count {
+  margin-left: 20px;
+  padding-top: 1.5%;
+  padding-bottom: 1.5%;
+  font-weight: bold;
+  font-family: "Ubuntu", sans-serif;
+}
+
+.task-card {
+  background-color: rgba(243, 184, 23, 1);
+  width: 90%;
+  margin-left: 20px;
+  margin-bottom: 3%;
+  border: 1px solid lightgray;
+  padding: 1rem;
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+  width: 99%;
+  font-weight: bold;
 }
