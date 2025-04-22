@@ -41,7 +41,7 @@ export default function Aplication() {
     {
       id: 4,
       title: "Estudar React",
-      description: "Anotações importantes para o estudo",
+      description: "Anotações importantes para o estudo de React",
     },
     {
       id: 5,
