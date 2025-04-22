@@ -22,7 +22,7 @@ export default function Aplication() {
     minute: "2-digit",
     second: "2-digit",
   })
-
+  
   const deleteTask = (id) => {
     setTasks(tasks.filter((task) => task.id !== id))
   }
