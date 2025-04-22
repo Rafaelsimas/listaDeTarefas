@@ -4,6 +4,7 @@ import { IoIosAddCircle } from "react-icons/io"
 import { FaTrashAlt, FaPen } from "react-icons/fa"
 
 export default function Aplication() {
+  const [tasks, setTasks] = useState([])
   const [now, setNow] = useState(new Date())
 
   useEffect(() => {
@@ -21,14 +22,6 @@ export default function Aplication() {
     minute: "2-digit",
     second: "2-digit",
   })
-
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      title: "Estudar React",
-      description: "Anotações importantes para o estudo",
-    },
-  ])
 
   const deleteTask = (id) => {
     setTasks(tasks.filter((task) => task.id !== id))
