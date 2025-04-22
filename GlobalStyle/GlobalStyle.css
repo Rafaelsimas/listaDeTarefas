@@ -124,17 +124,11 @@ header nav .exit {
 }
 
 .container {
-<<<<<<< HEAD
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-=======
-  display: flex;
-  flex-direction: column;
-  align-items: center;
->>>>>>> 144310fb5de6e957ed03712ef1a07b1b22c9f261
 }
 .task-bx {
   background-color: white;
@@ -142,12 +136,9 @@ header nav .exit {
   height: 80vh;
   margin-top: 15%;
   border-radius: 2%;
-<<<<<<< HEAD
   flex-direction: column;
   display: flex;
   gap: 15px;
-=======
->>>>>>> 144310fb5de6e957ed03712ef1a07b1b22c9f261
 }
 
 .task-bx .count {
@@ -169,7 +160,6 @@ header nav .exit {
   width: 99%;
   font-weight: bold;
 }
-<<<<<<< HEAD
 
 .container .form{
   margin-inline: auto;
@@ -224,5 +214,3 @@ header nav .exit {
 .container .formBox .exit{
 margin-right: auto;
 }
-=======
->>>>>>> 144310fb5de6e957ed03712ef1a07b1b22c9f261
