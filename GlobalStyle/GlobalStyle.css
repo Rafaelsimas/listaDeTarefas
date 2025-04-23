@@ -162,3 +162,58 @@ header nav .exit {
   width: 99%;
   font-weight: bold;
 }
+
+
+.container .form{
+  margin-inline: auto;
+  padding-bottom: 1px;
+  width: 400px;
+  height: 150px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+  border-radius: 14px;
+  border: 1px solid black;
+}
+.container .form h2{
+  background-color: rgb(243, 181, 12);
+  height: 30px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+  border-bottom: 1px solid black;
+  gap: 30%;
+}
+.container .form input{
+  padding: 5px;
+  width: 90%;
+  border-radius: 14px;
+  border: 1px solid black;
+}
+.container .form button{
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  width: 70%;
+  height: 30px;
+  padding: 5px;
+  border-radius: 14px;
+  border: 1px solid black;
+  background-color: rgb(180, 178, 178);
+}
+.container .hidden{
+  width: 100%;
+ display: none; 
+}
+
+.container .formBox .exit{
+margin-right: auto;
+}

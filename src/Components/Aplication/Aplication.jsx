@@ -5,8 +5,25 @@ import { FaTrashAlt, FaPen } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 
 export default function Aplication() {
-  const [tasks, setTasks] = useState([])
-  const [now, setNow] = useState(new Date())
+  const [tasks, setTasks] = useState([]);
+  const [title, setTitle] = useState("");
+  const [description, setDescripion] = useState("");
+
+  const actionSubmit = (event) => {
+    event.preventDefault();
+
+    const newTasks = {
+      id: tasks.length + 1,
+      title,
+      description,
+    };
+
+    setTasks([...tasks, newTasks]);
+    setTitle("");
+    setDescripion("");
+  };
+
+  const [now, setNow] = useState(new Date());
 
   useEffect(() => {
     const interval = setInterval(() => {
