@@ -131,27 +131,30 @@ header nav .exit {
   justify-content: center;
 }
 .task-bx {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background-color: white;
   width: 100%;
   height: 80vh;
   margin-top: 15%;
-  border-radius: 3%;
+  row-gap: 12px;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
   overflow: auto;
 }
 
 .task-bx .count {
-  margin-left: 20px;
-  padding-top: 1.5%;
-  padding-bottom: 1.5%;
+  padding: 1rem;
   font-weight: bold;
+  text-align: left;
+  width: 100%;
   font-family: "Ubuntu", sans-serif;
 }
 
 .task-card {
   background-color: rgba(243, 184, 23, 1);
   width: 90%;
-  margin-left: 20px;
-  margin-bottom: 3%;
   border: 1px solid lightgray;
   padding: 1rem;
 }
@@ -214,6 +217,14 @@ header nav .exit {
  display: none; 
 }
 
-.container .formBox .exit{
-margin-right: auto;
+.container .formBox {
+  display: flex;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  margin-block: auto;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 10px;
 }
