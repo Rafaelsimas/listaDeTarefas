@@ -2,38 +2,18 @@ import { useEffect, useState } from "react";
 import Menu from "../Menu/Menu";
 import { IoIosAddCircle } from "react-icons/io";
 import { FaTrashAlt, FaPen } from "react-icons/fa";
-import { IoMdClose } from "react-icons/io";
+
+import axios from "axios";
+import ComponentAddTask from "../AddTask/AddTask";
 
 export default function Aplication() {
+  const URL_API = import.meta.env.VITE_URL_API;
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescripion] = useState("");
-  const [visiblePopUp, setVisiblePopUp] = useState(false);
-
-  const actionSubmit = (event) => {
-    event.preventDefault();
-
-    const newTasks = {
-      id: tasks.length + 1,
-      title,
-      description,
-    };
-
-    setTasks([...tasks, newTasks]);
-    setTitle("");
-    setDescripion("");
-    setVisiblePopUp(false);
-  };
-
   const [now, setNow] = useState(new Date());
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setNow(new Date())
-    }, 1000) // atualiza a cada 1 segundo
-
-    return () => clearInterval(interval)
-  }, [])
+  const [visiblePopUp, setVisiblePopUp] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const formatted = now.toLocaleString("pt-BR", {
     day: "2-digit",
@@ -41,78 +21,116 @@ export default function Aplication() {
     hour: "2-digit",
     minute: "2-digit",
     second: "2-digit",
-  })
-  
-  const deleteTask = (id) => {
-    setTasks(tasks.filter((task) => task.id !== id))
-  }
+  });
 
-  const editTask = (id) => {
-    const newTitle = prompt("Digite o novo título:")
-    const newDescription = prompt("Digite a nova descrição:")
-    if (newTitle && newDescription) {
-      setTasks(
-        tasks.map((task) =>
-          task.id === id
-            ? { ...task, title: newTitle, description: newDescription }
-            : task
-        )
-      )
+  const createTask = async (event) => {
+    event.preventDefault();
+    try {
+      if (!title || !description) {
+        alert("Preencha todos os campos");
+        return;
+      }
+
+      const response = await axios.post(`${URL_API}/data`, {
+        title,
+        description,
+      });
+
+      setTasks([...tasks, response.data]);
+      setTitle("");
+      setDescripion("");
+      setVisiblePopUp(false);
+    } catch (error) {
+      console.log(`Error ao criar tarefa: ${error}`);
     }
-  }
+  };
 
-  const addTasks = () => {
-    setVisiblePopUp(true)
-  }
+  const getTask = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`${URL_API}/data`);
+      setTasks(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.log(`Erro ao buscar as Tasks ${error}`);
+      setLoading(false);
+    }
+  };
 
-  const exit = () => {
-    setVisiblePopUp(false)
-  }
+  const alertDelete = (id) => {
+    if (window.confirm("Tem certeza que deseja deletar?")) {
+      deleteTask(id);
+    }
+  };
 
-  const popUpAddTask = () => {
-    return (
-      <div className="formBox hidden">
-      <form className="form" onSubmit={actionSubmit} action="#">
-        <h2>Adicione suas tarefas  <IoMdClose onClick={ exit} className="exit"/></h2>
-        <input
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          type="text"
-          placeholder="Registre sua tarefa"
-          required
-        />
-        <input
-          value={description}
-          onChange={(e) => setDescripion(e.target.value)}
-          type="text"
-          placeholder="Descreva sua tarefa"
-          required
-        />
-        <button type="submit">Adicionar</button>
-      </form>
-    </div>
-    )
-  }
+  const deleteTask = async (id) => {
+    try {
+      await axios.delete(`${URL_API}/data/${id}`);
+      setTasks(tasks.filter((task) => task.id !== id));
+    } catch (error) {
+      console.log(`Erro ao deletar task ${error}`);
+    }
+  };
+
+  const editTask = async (id) => {
+    const newTitle = prompt("Digite o novo título:");
+    const newDescription = prompt("Digite a nova descrição:");
+
+    try {
+      if (newTitle && newDescription) {
+        const response = await axios.put(`${URL_API}/data/${id}`, {
+          title: newTitle,
+          description: newDescription,
+        });
+
+        setTasks(tasks.map((task) => (task.id === id ? response.data : task)));
+      }
+    } catch (error) {
+      console.log(`Erro ao editar task ${error}`);
+    }
+  };
+
+  useEffect(() => {
+    getTask();
+
+    const interval = setInterval(() => {
+      setNow(new Date());
+    }, 1000); // atualiza a cada 1 segundo
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <>
       <Menu />
       <div className="container">
-      {visiblePopUp && popUpAddTask()}
+        {visiblePopUp && (
+          <ComponentAddTask
+            setVisiblePopUp={setVisiblePopUp}
+            title={title}
+            setTitle={setTitle}
+            description={description}
+            setDescripion={setDescripion}
+            createTask={createTask}
+          />
+        )}
         <div className="date">
           <h1>{formatted}</h1>
         </div>
-        <IoIosAddCircle onClick={addTasks} className="add" />
+        <IoIosAddCircle onClick={() => setVisiblePopUp(true)} className="add" />
         <div className="task-bx">
           <p className="count">Você tem {tasks.length} tarefa(s)</p>
-
+          {loading && <span>Por favor, aguarde...</span>}
+          {!loading && tasks?.length === 0 && (
+            <span>Nenhuma tarefa encontrada.</span>
+          )}
           {tasks.map((task) => (
             <div className="task-card" key={task.id}>
               <div className="title">
                 {task.title}
                 <div className="icon">
                   <FaTrashAlt
-                    onClick={() => deleteTask(task.id)}
+                    onClick={() => alertDelete(task.id)}
                     style={{ cursor: "pointer", marginLeft: "10px" }}
                     title="Excluir"
                   />
@@ -123,12 +141,11 @@ export default function Aplication() {
                   />
                 </div>
               </div>
-
               <div className="description">{task.description}</div>
             </div>
           ))}
         </div>
       </div>
     </>
-  )
+  );
 }
