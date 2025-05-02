@@ -4,36 +4,15 @@ import { IoIosAddCircle } from "react-icons/io";
 import { FaTrashAlt, FaPen } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 
+import axios from "axios";
+
 export default function Aplication() {
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescripion] = useState("");
-  const [visiblePopUp, setVisiblePopUp] = useState(false);
-
-  const actionSubmit = (event) => {
-    event.preventDefault();
-
-    const newTasks = {
-      id: tasks.length + 1,
-      title,
-      description,
-    };
-
-    setTasks([...tasks, newTasks]);
-    setTitle("");
-    setDescripion("");
-    setVisiblePopUp(false);
-  };
-
   const [now, setNow] = useState(new Date());
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setNow(new Date())
-    }, 1000) // atualiza a cada 1 segundo
-
-    return () => clearInterval(interval)
-  }, [])
+  const [visiblePopUp, setVisiblePopUp] = useState(false);
+  const URL_API = import.meta.env.VITE_URL_API;
 
   const formatted = now.toLocaleString("pt-BR", {
     day: "2-digit",
@@ -41,64 +20,115 @@ export default function Aplication() {
     hour: "2-digit",
     minute: "2-digit",
     second: "2-digit",
-  })
-  
-  const deleteTask = (id) => {
-    setTasks(tasks.filter((task) => task.id !== id))
-  }
+  });
 
-  const editTask = (id) => {
-    const newTitle = prompt("Digite o novo título:")
-    const newDescription = prompt("Digite a nova descrição:")
-    if (newTitle && newDescription) {
-      setTasks(
-        tasks.map((task) =>
-          task.id === id
-            ? { ...task, title: newTitle, description: newDescription }
-            : task
-        )
-      )
+  const actionSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const response = await axios.post(`${URL_API}/data`, {
+        title,
+        description,
+      });
+
+      setTasks([...tasks, response.data]);
+      setTitle("");
+      setDescripion("");
+      setVisiblePopUp(false);
+    } catch (error) {
+      console.log(`Error ao criar tarefa: ${error}`);
     }
-  }
+  };
+
+  const deleteTask = async (id) => {
+    try {
+      await axios.delete(`${URL_API}/data/${id}`);
+      setTasks(tasks.filter((task) => task.id !== id));
+    } catch (error) {
+      console.log(`Erro ao deletar task ${error}`);
+    }
+  };
+
+  const editTask = async (id) => {
+    const newTitle = prompt("Digite o novo título:");
+    const newDescription = prompt("Digite a nova descrição:");
+
+    try {
+      if (newTitle && newDescription) {
+        const response = await axios.put(`${URL_API}/data/${id}`, {
+          title: newTitle,
+          description: newDescription,
+        });
+
+        setTasks(
+          tasks.map((task) =>
+            task.id === id
+              ? response.data
+              : task
+          )
+        );
+      }
+    } catch (error) {
+      console.log(`Erro ao editar task ${error}`)
+    }
+  };
 
   const addTasks = () => {
-    setVisiblePopUp(true)
-  }
+    setVisiblePopUp(true);
+  };
 
   const exit = () => {
-    setVisiblePopUp(false)
-  }
+    setVisiblePopUp(false);
+  };
 
-  const popUpAddTask = () => {
-    return (
-      <div className="formBox hidden">
-      <form className="form" onSubmit={actionSubmit} action="#">
-        <h2>Adicione suas tarefas  <IoMdClose onClick={ exit} className="exit"/></h2>
-        <input
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          type="text"
-          placeholder="Registre sua tarefa"
-          required
-        />
-        <input
-          value={description}
-          onChange={(e) => setDescripion(e.target.value)}
-          type="text"
-          placeholder="Descreva sua tarefa"
-          required
-        />
-        <button type="submit">Adicionar</button>
-      </form>
-    </div>
-    )
-  }
+  const getTasks = async () => {
+    try {
+      const response = await axios.get(`${URL_API}/data`);
+      setTasks(response.data);
+    } catch (error) {
+      console.log(`Erro ao buscar as Tasks ${error}`);
+    }
+  };
+
+  useEffect(() => {
+    getTasks();
+
+    const interval = setInterval(() => {
+      setNow(new Date());
+    }, 1000); // atualiza a cada 1 segundo
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <>
       <Menu />
       <div className="container">
-      {visiblePopUp && popUpAddTask()}
+        {visiblePopUp && (
+          <div className="formBox hidden">
+            <form className="form" onSubmit={actionSubmit} action="#">
+              <h2>
+                Adicione suas tarefas{" "}
+                <IoMdClose onClick={exit} className="exit" />
+              </h2>
+              <input
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                type="text"
+                placeholder="Registre sua tarefa"
+                required
+              />
+              <input
+                value={description}
+                onChange={(e) => setDescripion(e.target.value)}
+                type="text"
+                placeholder="Descreva sua tarefa"
+                required
+              />
+              <button type="submit">Adicionar</button>
+            </form>
+          </div>
+        )}
         <div className="date">
           <h1>{formatted}</h1>
         </div>
@@ -130,5 +160,5 @@ export default function Aplication() {
         </div>
       </div>
     </>
-  )
+  );
 }
