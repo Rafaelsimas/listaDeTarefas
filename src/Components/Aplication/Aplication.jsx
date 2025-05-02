@@ -2,17 +2,18 @@ import { useEffect, useState } from "react";
 import Menu from "../Menu/Menu";
 import { IoIosAddCircle } from "react-icons/io";
 import { FaTrashAlt, FaPen } from "react-icons/fa";
-import { IoMdClose } from "react-icons/io";
 
 import axios from "axios";
+import ComponentAddTask from "../AddTask/AddTask";
 
 export default function Aplication() {
+  const URL_API = import.meta.env.VITE_URL_API;
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescripion] = useState("");
   const [now, setNow] = useState(new Date());
   const [visiblePopUp, setVisiblePopUp] = useState(false);
-  const URL_API = import.meta.env.VITE_URL_API;
+  const [loading, setLoading] = useState(false);
 
   const formatted = now.toLocaleString("pt-BR", {
     day: "2-digit",
@@ -22,10 +23,14 @@ export default function Aplication() {
     second: "2-digit",
   });
 
-  const actionSubmit = async (event) => {
+  const createTask = async (event) => {
     event.preventDefault();
-
     try {
+      if (!title || !description) {
+        alert("Preencha todos os campos");
+        return;
+      }
+
       const response = await axios.post(`${URL_API}/data`, {
         title,
         description,
@@ -37,6 +42,24 @@ export default function Aplication() {
       setVisiblePopUp(false);
     } catch (error) {
       console.log(`Error ao criar tarefa: ${error}`);
+    }
+  };
+
+  const getTask = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`${URL_API}/data`);
+      setTasks(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.log(`Erro ao buscar as Tasks ${error}`);
+      setLoading(false);
+    }
+  };
+
+  const alertDelete = (id) => {
+    if (window.confirm("Tem certeza que deseja deletar?")) {
+      deleteTask(id);
     }
   };
 
@@ -60,38 +83,15 @@ export default function Aplication() {
           description: newDescription,
         });
 
-        setTasks(
-          tasks.map((task) =>
-            task.id === id
-              ? response.data
-              : task
-          )
-        );
+        setTasks(tasks.map((task) => (task.id === id ? response.data : task)));
       }
     } catch (error) {
-      console.log(`Erro ao editar task ${error}`)
-    }
-  };
-
-  const addTasks = () => {
-    setVisiblePopUp(true);
-  };
-
-  const exit = () => {
-    setVisiblePopUp(false);
-  };
-
-  const getTasks = async () => {
-    try {
-      const response = await axios.get(`${URL_API}/data`);
-      setTasks(response.data);
-    } catch (error) {
-      console.log(`Erro ao buscar as Tasks ${error}`);
+      console.log(`Erro ao editar task ${error}`);
     }
   };
 
   useEffect(() => {
-    getTasks();
+    getTask();
 
     const interval = setInterval(() => {
       setNow(new Date());
@@ -105,44 +105,32 @@ export default function Aplication() {
       <Menu />
       <div className="container">
         {visiblePopUp && (
-          <div className="formBox hidden">
-            <form className="form" onSubmit={actionSubmit} action="#">
-              <h2>
-                Adicione suas tarefas{" "}
-                <IoMdClose onClick={exit} className="exit" />
-              </h2>
-              <input
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                type="text"
-                placeholder="Registre sua tarefa"
-                required
-              />
-              <input
-                value={description}
-                onChange={(e) => setDescripion(e.target.value)}
-                type="text"
-                placeholder="Descreva sua tarefa"
-                required
-              />
-              <button type="submit">Adicionar</button>
-            </form>
-          </div>
+          <ComponentAddTask
+            setVisiblePopUp={setVisiblePopUp}
+            title={title}
+            setTitle={setTitle}
+            description={description}
+            setDescripion={setDescripion}
+            createTask={createTask}
+          />
         )}
         <div className="date">
           <h1>{formatted}</h1>
         </div>
-        <IoIosAddCircle onClick={addTasks} className="add" />
+        <IoIosAddCircle onClick={() => setVisiblePopUp(true)} className="add" />
         <div className="task-bx">
           <p className="count">Você tem {tasks.length} tarefa(s)</p>
-
+          {loading && <span>Por favor, aguarde...</span>}
+          {!loading && tasks?.length === 0 && (
+            <span>Nenhuma tarefa encontrada.</span>
+          )}
           {tasks.map((task) => (
             <div className="task-card" key={task.id}>
               <div className="title">
                 {task.title}
                 <div className="icon">
                   <FaTrashAlt
-                    onClick={() => deleteTask(task.id)}
+                    onClick={() => alertDelete(task.id)}
                     style={{ cursor: "pointer", marginLeft: "10px" }}
                     title="Excluir"
                   />
@@ -153,7 +141,6 @@ export default function Aplication() {
                   />
                 </div>
               </div>
-
               <div className="description">{task.description}</div>
             </div>
           ))}
