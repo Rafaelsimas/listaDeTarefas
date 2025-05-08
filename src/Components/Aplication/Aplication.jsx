@@ -3,31 +3,37 @@ import Menu from "../Menu/Menu";
 import { IoIosAddCircle } from "react-icons/io";
 import { FaTrashAlt, FaPen } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
+import axios from "axios";
 
 export default function Aplication() {
+  const URL_API = import.meta.env.VITE_URL_API;
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescripion] = useState("");
   const [visiblePopUp, setVisiblePopUp] = useState(false);
 
-  const actionSubmit = (event) => {
+  const actionSubmit = async (event) => {
     event.preventDefault();
 
-    const newTasks = {
-      id: tasks.length + 1,
-      title,
-      description,
-    };
+    try {
+      const response = await axios.post(`${URL_API}/data`, {title, description});
+  
+      setTasks([...tasks, response.data]);
+      setTitle("");
+      setDescripion("");
+      setVisiblePopUp(false);
+    } catch (error) {
+    console.log(`Erro ao criar tarefa:${error}`);
+      
+    }
 
-    setTasks([...tasks, newTasks]);
-    setTitle("");
-    setDescripion("");
-    setVisiblePopUp(false);
+    
   };
 
   const [now, setNow] = useState(new Date());
 
   useEffect(() => {
+    getTasks();
     const interval = setInterval(() => {
       setNow(new Date())
     }, 1000) // atualiza a cada 1 segundo
@@ -43,22 +49,38 @@ export default function Aplication() {
     second: "2-digit",
   })
   
-  const deleteTask = (id) => {
-    setTasks(tasks.filter((task) => task.id !== id))
+  const deleteTask = async (id) => {
+    try {
+       await axios.delete(`${URL_API}/data/${id}`)
+       setTasks(tasks.filter((task) => task.id !== id))
+    } catch (error) {
+      console.log(`Erro ao deletar as Tasks ${error}`);
+    }
+    
   }
 
-  const editTask = (id) => {
+  const editTask = async (id) => {
     const newTitle = prompt("Digite o novo título:")
     const newDescription = prompt("Digite a nova descrição:")
-    if (newTitle && newDescription) {
-      setTasks(
-        tasks.map((task) =>
-          task.id === id
-            ? { ...task, title: newTitle, description: newDescription }
-            : task
+
+    try {
+      
+      if (newTitle && newDescription) {
+        const response = await axios.put(`${URL_API}/data/${id}`, {title: newTitle, description: newDescription}) 
+        setTasks(
+          tasks.map((task) =>
+            task.id === id
+              ?response.data
+              : task
+          )
         )
-      )
-    }
+      }
+   } catch (error) {
+     console.log(`Erro ao deletar as Tasks ${error}`);
+   }
+
+   
+   
   }
 
   const addTasks = () => {
@@ -67,6 +89,15 @@ export default function Aplication() {
 
   const exit = () => {
     setVisiblePopUp(false)
+  }
+
+  const getTasks = async ()=>{
+    try {
+      const response = await axios.get(`${URL_API}/data`)
+      setTasks(response.data)
+    } catch (error) {
+      console.log(`Erro ao buscar as Tasks ${error}`);
+    }
   }
 
   const popUpAddTask = () => {
